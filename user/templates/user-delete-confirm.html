@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <h2>Удалить {{ user.name }}?</h2>
+    <button type="submit">ок</button>
+</form>
+</body>
+</html>

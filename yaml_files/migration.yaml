@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hw-sa-migration
+spec:
+  template:
+    spec:
+      containers:
+        - name: hw-sa-migration
+          image: alitoolow/hw-sa:v1
+          command: ["python"]
+          args: [
+            "manage.py",
+            "migrate"
+          ]
+          env:
+            - name: POSTGRES_DB
+              value: hw-sa
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+
+      restartPolicy: Never
+  backoffLimit: 5

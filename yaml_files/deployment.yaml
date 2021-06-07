@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw-sa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hw-sa
+  template:
+    metadata:
+      labels:
+        app: hw-sa
+    spec:
+      containers:
+      - name: hw-sa
+        image: alitoolow/hw-sa:v1
+        command: ["python"]
+        args: [
+          "manage.py",
+          "runserver",
+          "0.0.0.0:8000"
+        ]
+        ports:
+        - name: web
+          containerPort: 8000
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: hw-sa-secret
+                key: POSTGRES_DB
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: hw-sa-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: hw-sa-secret
+                key: POSTGRES_USER
+          - name: SECRET_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: hw-sa-configmap
+                key: SECRET_KEY

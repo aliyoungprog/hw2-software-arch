@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Новый пользователь</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Сохранить</button>
+</form>
+{% if user %}
+<a href="{% url 'delete_user' user.id %}">Удалить</a>
+{% endif %}
+</body>
+</html>
